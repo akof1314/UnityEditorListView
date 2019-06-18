@@ -10,12 +10,19 @@ public static class GUIClipHelper
 
     public static void InitType()
     {
+        if (VisibleRect != null)
+        {
+            return;
+        }
         var tyGUIClip = Type.GetType("UnityEngine.GUIClip,UnityEngine");
         if (tyGUIClip != null)
         {
-            var piVisibleRect = tyGUIClip.GetProperty("visibleRect", BindingFlags.Static | BindingFlags.Public);
+            var piVisibleRect = tyGUIClip.GetProperty("visibleRect", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             if (piVisibleRect != null)
-                VisibleRect = (Func<Rect>)Delegate.CreateDelegate(typeof(Func<Rect>), piVisibleRect.GetGetMethod());
+            {
+                var getMethod = piVisibleRect.GetGetMethod(true) ?? piVisibleRect.GetGetMethod(false);
+                VisibleRect = (Func<Rect>)Delegate.CreateDelegate(typeof(Func<Rect>), getMethod);
+            }
         }
     }
 

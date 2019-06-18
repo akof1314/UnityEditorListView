@@ -56,7 +56,7 @@ namespace WH.Editor
 		}
 		public static ListViewShared.ListViewElementsEnumerator DoListView(Rect pos, ListViewState state, int[] colWidths, string dragTitle)
 		{
-			int controlID = GUIUtility.GetControlID(ListViewGUI.listViewHash, FocusType.Native);
+			int controlID = GUIUtility.GetControlID(ListViewGUI.listViewHash, FocusType.Passive);
 			state.ID = controlID;
 			state.selectionChanged = false;
 			Rect rect;
